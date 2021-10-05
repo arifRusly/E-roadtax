@@ -62,7 +62,7 @@ class UserController extends Controller
     public function login(Request $request){
         $validator = Validator::make($request->all(),[
             'email' => 'required|string',
-            'password' => 'required|min:6',
+            'password' => 'required',
        ]);
 
 
@@ -125,6 +125,35 @@ class UserController extends Controller
             'message' => $responseMessage
          ], 200);
            
+    }
+
+    public function UpdateProfile(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string',
+            'email' => 'required|string',
+       ]);
+
+       if($validator-> fails()){
+           return response()->json([
+               'success'=> false,
+               'message'=> $validator->messages()->toArray()
+           ],500);
+       }
+
+       $user = Auth::guard("api")->user();
+
+       $data = User:: find($request->id);
+       $data->name = $request->name;
+       $data->email = $request->email;
+
+       $result = $data->save();
+
+       $responseMessage = "Updated User info Successful";
+
+       return response()->json([
+        'success' => true,
+        'message' => $responseMessage
+       ],200);
     }
 
 

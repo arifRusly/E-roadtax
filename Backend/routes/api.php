@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\roadtaxController;
 
 
 /*
@@ -21,4 +22,12 @@ Route::group(['prefix' => 'users', 'middleware' => 'CORS'], function ($router) {
     Route::post('/login', [UserController::class, 'login'])->name('login.user');
     Route::get('/view-profile', [UserController::class, 'viewProfile'])->name('profile.user');
     Route::get('/logout', [UserController::class, 'logout'])->name('logout.user');
+    Route::post('/roadtax', [roadtaxController::class, 'roadtax']);
+
+    Route::get('/view-roadtax-all', [roadtaxController::class, 'viewRoadtaxAll']);
+    Route::get('/view-roadtax', [roadtaxController::class, 'viewRoadtax']);
+
+    Route::put('/update-profile', [UserController::class, 'UpdateProfile']);
 });
+
+//Route::post('/users/roadtax', [roadtaxController::class, 'roadtax']);
